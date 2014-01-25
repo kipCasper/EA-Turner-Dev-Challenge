@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="TitlesModel" Alias="Self" p1:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:p1="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="TitlesEntities1" p1:LazyLoadingEnabled="true">
+    <EntitySet Name="Awards" EntityType="TitlesModel.Award" />
+    <EntitySet Name="Genres" EntityType="TitlesModel.Genre" />
+    <EntitySet Name="OtherNames" EntityType="TitlesModel.OtherName" />
+    <EntitySet Name="Participants" EntityType="TitlesModel.Participant" />
+    <EntitySet Name="StoryLines" EntityType="TitlesModel.StoryLine" />
+    <EntitySet Name="Titles" EntityType="TitlesModel.Title" />
+    <EntitySet Name="TitleGenres" EntityType="TitlesModel.TitleGenre" />
+    <EntitySet Name="TitleParticipants" EntityType="TitlesModel.TitleParticipant" />
+    <AssociationSet Name="Award_FK_Award_Title" Association="TitlesModel.Award_FK_Award_Title">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="Award" EntitySet="Awards" />
+    </AssociationSet>
+    <AssociationSet Name="TitleGenre_FK_TitleGenre_Genre" Association="TitlesModel.TitleGenre_FK_TitleGenre_Genre">
+      <End Role="Genre" EntitySet="Genres" />
+      <End Role="TitleGenre" EntitySet="TitleGenres" />
+    </AssociationSet>
+    <AssociationSet Name="OtherName_FK_OtherName_Title" Association="TitlesModel.OtherName_FK_OtherName_Title">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="OtherName" EntitySet="OtherNames" />
+    </AssociationSet>
+    <AssociationSet Name="TitleParticipant_FK_TitleParticipant_Participant" Association="TitlesModel.TitleParticipant_FK_TitleParticipant_Participant">
+      <End Role="Participant" EntitySet="Participants" />
+      <End Role="TitleParticipant" EntitySet="TitleParticipants" />
+    </AssociationSet>
+    <AssociationSet Name="StoryLine_FK_StoryLine_Title" Association="TitlesModel.StoryLine_FK_StoryLine_Title">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="StoryLine" EntitySet="StoryLines" />
+    </AssociationSet>
+    <AssociationSet Name="TitleGenre_FK_TitleGenre_Title" Association="TitlesModel.TitleGenre_FK_TitleGenre_Title">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="TitleGenre" EntitySet="TitleGenres" />
+    </AssociationSet>
+    <AssociationSet Name="TitleParticipant_FK_TitleParticipant_Title" Association="TitlesModel.TitleParticipant_FK_TitleParticipant_Title">
+      <End Role="Title" EntitySet="Titles" />
+      <End Role="TitleParticipant" EntitySet="TitleParticipants" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Award">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="TitleId" Type="Int32" Nullable="false" />
+    <Property Name="AwardWon" Type="Boolean" />
+    <Property Name="AwardYear" Type="Int32" />
+    <Property Name="Award1" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="AwardCompany" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Title" Relationship="TitlesModel.Award_FK_Award_Title" FromRole="Award" ToRole="Title" />
+  </EntityType>
+  <EntityType Name="Genre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="TitleGenres" Relationship="TitlesModel.TitleGenre_FK_TitleGenre_Genre" FromRole="Genre" ToRole="TitleGenre" />
+  </EntityType>
+  <EntityType Name="OtherName">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="TitleId" Type="Int32" />
+    <Property Name="TitleNameLanguage" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="TitleNameType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="TitleNameSortable" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="TitleName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Title" Relationship="TitlesModel.OtherName_FK_OtherName_Title" FromRole="OtherName" ToRole="Title" />
+  </EntityType>
+  <EntityType Name="Participant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="ParticipantType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <NavigationProperty Name="TitleParticipants" Relationship="TitlesModel.TitleParticipant_FK_TitleParticipant_Participant" FromRole="Participant" ToRole="TitleParticipant" />
+  </EntityType>
+  <EntityType Name="StoryLine">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="TitleId" Type="Int32" Nullable="false" />
+    <Property Name="Type" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Language" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <NavigationProperty Name="Title" Relationship="TitlesModel.StoryLine_FK_StoryLine_Title" FromRole="StoryLine" ToRole="Title" />
+  </EntityType>
+  <EntityType Name="Title">
+    <Key>
+      <PropertyRef Name="TitleId" />
+    </Key>
+    <Property Name="TitleId" Type="Int32" Nullable="false" />
+    <Property Name="TitleName" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="TitleNameSortable" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="TitleTypeId" Type="Int32" />
+    <Property Name="ReleaseYear" Type="Int32" />
+    <Property Name="ProcessedDateTimeUTC" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="Awards" Relationship="TitlesModel.Award_FK_Award_Title" FromRole="Title" ToRole="Award" />
+    <NavigationProperty Name="OtherNames" Relationship="TitlesModel.OtherName_FK_OtherName_Title" FromRole="Title" ToRole="OtherName" />
+    <NavigationProperty Name="StoryLines" Relationship="TitlesModel.StoryLine_FK_StoryLine_Title" FromRole="Title" ToRole="StoryLine" />
+    <NavigationProperty Name="TitleGenres" Relationship="TitlesModel.TitleGenre_FK_TitleGenre_Title" FromRole="Title" ToRole="TitleGenre" />
+    <NavigationProperty Name="TitleParticipants" Relationship="TitlesModel.TitleParticipant_FK_TitleParticipant_Title" FromRole="Title" ToRole="TitleParticipant" />
+  </EntityType>
+  <EntityType Name="TitleGenre">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TitleId" Type="Int32" Nullable="false" />
+    <Property Name="GenreId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Genre" Relationship="TitlesModel.TitleGenre_FK_TitleGenre_Genre" FromRole="TitleGenre" ToRole="Genre" />
+    <NavigationProperty Name="Title" Relationship="TitlesModel.TitleGenre_FK_TitleGenre_Title" FromRole="TitleGenre" ToRole="Title" />
+  </EntityType>
+  <EntityType Name="TitleParticipant">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" p1:StoreGeneratedPattern="Identity" />
+    <Property Name="TitleId" Type="Int32" Nullable="false" />
+    <Property Name="ParticipantId" Type="Int32" Nullable="false" />
+    <Property Name="IsKey" Type="Boolean" Nullable="false" />
+    <Property Name="RoleType" Type="String" MaxLength="100" Unicode="true" FixedLength="false" />
+    <Property Name="IsOnScreen" Type="Boolean" Nullable="false" />
+    <NavigationProperty Name="Participant" Relationship="TitlesModel.TitleParticipant_FK_TitleParticipant_Participant" FromRole="TitleParticipant" ToRole="Participant" />
+    <NavigationProperty Name="Title" Relationship="TitlesModel.TitleParticipant_FK_TitleParticipant_Title" FromRole="TitleParticipant" ToRole="Title" />
+  </EntityType>
+  <Association Name="Award_FK_Award_Title">
+    <End Role="Title" Type="TitlesModel.Title" Multiplicity="1" />
+    <End Role="Award" Type="TitlesModel.Award" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="TitleId" />
+      </Principal>
+      <Dependent Role="Award">
+        <PropertyRef Name="TitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TitleGenre_FK_TitleGenre_Genre">
+    <End Role="Genre" Type="TitlesModel.Genre" Multiplicity="1" />
+    <End Role="TitleGenre" Type="TitlesModel.TitleGenre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Genre">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TitleGenre">
+        <PropertyRef Name="GenreId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="OtherName_FK_OtherName_Title">
+    <End Role="Title" Type="TitlesModel.Title" Multiplicity="0..1" />
+    <End Role="OtherName" Type="TitlesModel.OtherName" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="TitleId" />
+      </Principal>
+      <Dependent Role="OtherName">
+        <PropertyRef Name="TitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TitleParticipant_FK_TitleParticipant_Participant">
+    <End Role="Participant" Type="TitlesModel.Participant" Multiplicity="1" />
+    <End Role="TitleParticipant" Type="TitlesModel.TitleParticipant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Participant">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TitleParticipant">
+        <PropertyRef Name="ParticipantId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="StoryLine_FK_StoryLine_Title">
+    <End Role="Title" Type="TitlesModel.Title" Multiplicity="1" />
+    <End Role="StoryLine" Type="TitlesModel.StoryLine" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="TitleId" />
+      </Principal>
+      <Dependent Role="StoryLine">
+        <PropertyRef Name="TitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TitleGenre_FK_TitleGenre_Title">
+    <End Role="Title" Type="TitlesModel.Title" Multiplicity="1" />
+    <End Role="TitleGenre" Type="TitlesModel.TitleGenre" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="TitleId" />
+      </Principal>
+      <Dependent Role="TitleGenre">
+        <PropertyRef Name="TitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="TitleParticipant_FK_TitleParticipant_Title">
+    <End Role="Title" Type="TitlesModel.Title" Multiplicity="1" />
+    <End Role="TitleParticipant" Type="TitlesModel.TitleParticipant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Title">
+        <PropertyRef Name="TitleId" />
+      </Principal>
+      <Dependent Role="TitleParticipant">
+        <PropertyRef Name="TitleId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

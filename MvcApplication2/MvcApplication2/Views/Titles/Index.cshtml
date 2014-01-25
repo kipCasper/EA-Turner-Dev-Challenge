@@ -1,0 +1,59 @@
+﻿@model IEnumerable<MvcApplication2.Models.Title>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @using (Html.BeginForm("Search", "titles", FormMethod.Get))
+    {
+       @Html.TextBox("name")
+       <input type="submit" value="Search" />
+    }
+</p>
+<table>
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleNameSortable)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TitleTypeId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ReleaseYear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ProcessedDateTimeUTC)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleNameSortable)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TitleTypeId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ReleaseYear)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ProcessedDateTimeUTC)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id=item.TitleId })
+        </td>
+    </tr>
+}
+
+</table>
