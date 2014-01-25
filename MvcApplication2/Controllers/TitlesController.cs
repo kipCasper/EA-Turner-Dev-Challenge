@@ -16,9 +16,22 @@ namespace MvcApplication2.Controllers
         //
         // GET: /Titles/
 
-        public ActionResult Index()
+        public ActionResult Index(string searchString = "")
         {
-            return View(db.Titles.ToList());
+            if (searchString == "")
+            {
+                return View(db.Titles.ToList());
+            }
+
+            var titles = from m in db.Titles
+                         select m;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                titles = titles.Where(s => s.TitleName.Contains(searchString));
+            }
+
+            return View(titles);
         }
 
         //
@@ -32,23 +45,7 @@ namespace MvcApplication2.Controllers
                 return HttpNotFound();
             }
             return View(title);
-        }
-
-        public ActionResult Search(string name)
-        {
-            var result = db.Titles.Where(a => a.TitleName == name).FirstOrDefault();
-            if (result == null)
-            {
-                return View("/titles/");
-            }
-            Title title = db.Titles.Find(result.TitleId);
-            if (title == null)
-            {
-                return HttpNotFound();
-            }
-
-            return View("/details/", title.TitleId);
-        }
+        }        
 
         //
         // GET: /Titles/Create
